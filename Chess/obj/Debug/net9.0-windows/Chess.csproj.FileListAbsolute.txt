@@ -1,0 +1,14 @@
+C:\vsCode\Chess\Chess\bin\Debug\net9.0-windows\Chess.exe
+C:\vsCode\Chess\Chess\bin\Debug\net9.0-windows\Chess.deps.json
+C:\vsCode\Chess\Chess\bin\Debug\net9.0-windows\Chess.runtimeconfig.json
+C:\vsCode\Chess\Chess\bin\Debug\net9.0-windows\Chess.dll
+C:\vsCode\Chess\Chess\bin\Debug\net9.0-windows\Chess.pdb
+C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\Chess.GeneratedMSBuildEditorConfig.editorconfig
+C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\Chess.AssemblyInfoInputs.cache
+C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\Chess.AssemblyInfo.cs
+C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\Chess.csproj.CoreCompileInputs.cache
+C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\Chess.dll
+C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\refint\Chess.dll
+C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\Chess.pdb
+C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\Chess.genruntimeconfig.cache
+C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\ref\Chess.dll
