@@ -35,7 +35,7 @@ public partial class Form1 : Form
         this.ClientSize = new Size(8 * tileSize, 8 * tileSize);
     }
 
-    private void Square_Click(object sender, EventArgs e)
+    private void Square_Click(object? sender, EventArgs e)
     {
         if (sender is Button clicked){
             Point? position = clicked.Tag as Point?;
