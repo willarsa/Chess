@@ -6,23 +6,23 @@ public class ChessPiece
 
     private string WhiteSymbol => Type switch
     {
-        "Pawn" => "P",
-        "Rook" => "R",
-        "Knight" => "K",
-        "Bishop" => "B",
-        "Queen" => "Q",
-        "King" => "K",
+        "Pawn" => "♙",
+        "Rook" => "♖",
+        "Knight" => "♘",
+        "Bishop" => "♗",
+        "Queen" => "♕",
+        "King" => "♔",
         _ => "?"
     };
 
     private string BlackSymbol => Type switch
     {
-        "Pawn" => "P",
-        "Rook" => "R",
-        "Knight" => "K",
-        "Bishop" => "B",
-        "Queen" => "Q",
-        "King" => "K",
+        "Pawn" => "♟",
+        "Rook" => "♜",
+        "Knight" => "♞",
+        "Bishop" => "♝",
+        "Queen" => "♛",
+        "King" => "♚",
         _ => "?"
     };
 

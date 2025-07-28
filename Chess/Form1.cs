@@ -29,6 +29,60 @@ public partial class Form1 : Form
                 square.Click += Square_Click;
                 boardSquares[row, col] = square;
                 this.Controls.Add(square);
+
+                if (row is 1 || row is 6)
+                {
+                    square.Text = "♟";
+                }
+                else if (row is 0)
+                {
+                    if (col is 0 || col is 7)
+                    {
+                        square.Text = "♜";
+                    }
+                    else if (col is 1 || col is 6)
+                    {
+                        square.Text = "♞";
+                    }
+                    else if (col is 2 || col is 5)
+                    {
+                        square.Text = "♝";
+                    }
+                    else if (col is 4)
+                    {
+                        square.Text = "♛";
+                    }
+                    else
+                    {
+                        square.Text = "♚";
+                    }
+                }
+                else if (row is 7)
+                {
+                    if (col is 0 || col is 7)
+                    {
+                        square.Text = "♖";
+                    }
+                    else if (col is 1 || col is 6)
+                    {
+                        square.Text = "♘";
+                    }
+                    else if (col is 2 || col is 5)
+                    {
+                        square.Text = "♗";
+                    }
+                    else if (col is 4)
+                    {
+                        square.Text = "♔";
+                    }
+                    else
+                    {
+                        square.Text = "♕";
+                    }
+                }
+                
+                
+                square.Font = new Font("Arial", 18, FontStyle.Regular);
             }
         }
 
