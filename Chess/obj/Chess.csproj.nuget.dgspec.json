@@ -1,17 +1,17 @@
 {
   "format": 1,
   "restore": {
-    "C:\\vsCode\\Chess\\chess\\Chess.csproj": {}
+    "C:\\vsCode\\Chess\\Chess\\Chess.csproj": {}
   },
   "projects": {
-    "C:\\vsCode\\Chess\\chess\\Chess.csproj": {
+    "C:\\vsCode\\Chess\\Chess\\Chess.csproj": {
       "version": "1.0.0",
       "restore": {
-        "projectUniqueName": "C:\\vsCode\\Chess\\chess\\Chess.csproj",
+        "projectUniqueName": "C:\\vsCode\\Chess\\Chess\\Chess.csproj",
         "projectName": "Chess",
-        "projectPath": "C:\\vsCode\\Chess\\chess\\Chess.csproj",
+        "projectPath": "C:\\vsCode\\Chess\\Chess\\Chess.csproj",
         "packagesPath": "C:\\Users\\rosam\\.nuget\\packages\\",
-        "outputPath": "C:\\vsCode\\Chess\\chess\\obj\\",
+        "outputPath": "C:\\vsCode\\Chess\\Chess\\obj\\",
         "projectStyle": "PackageReference",
         "configFilePaths": [
           "C:\\Users\\rosam\\AppData\\Roaming\\NuGet\\NuGet.Config",

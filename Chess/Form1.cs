@@ -25,7 +25,7 @@ public partial class Form1 : Form
                 square.Size = new Size(tileSize, tileSize);
                 square.Location = new Point(col * tileSize, row * tileSize);
                 square.BackColor = (row + col) % 2 == 0 ? Color.White : Color.Gray;
-                square.Tag = new Point(row, col); // optional for tracking position
+                square.Tag = new Point(row, col);
                 square.Click += Square_Click;
                 boardSquares[row, col] = square;
                 this.Controls.Add(square);
