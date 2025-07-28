@@ -12,3 +12,4 @@ C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\refint\Chess.dll
 C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\Chess.pdb
 C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\Chess.genruntimeconfig.cache
 C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\ref\Chess.dll
+C:\vsCode\Chess\Chess\obj\Debug\net9.0-windows\Chess.sourcelink.json
