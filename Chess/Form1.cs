@@ -30,9 +30,12 @@ public partial class Form1 : Form
                 boardSquares[row, col] = square;
                 this.Controls.Add(square);
 
-                if (row is 1 || row is 6)
+                if (row is 1)
                 {
                     square.Text = "♟";
+                }
+                else if (row is 6) {
+                    square.Text = "♙";
                 }
                 else if (row is 0)
                 {
@@ -93,10 +96,11 @@ public partial class Form1 : Form
     {
         if (sender is Button clicked){
             Point? position = clicked.Tag as Point?;
+            string? type = clicked.Text as string;
 
             if (position.HasValue)
             {
-                MessageBox.Show($"You clicked square at {position.Value.X}, {position.Value.Y}");
+                MessageBox.Show($"You clicked the {type} square at {position.Value.X}, {position.Value.Y}");
             }
             else
             {
