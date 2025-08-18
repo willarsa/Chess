@@ -9,6 +9,7 @@ public partial class Form1 : Form
     private Button[,] boardSquares = new Button[8, 8];
     private ChessPiece[] whitePieces = new ChessPiece[16];
     private ChessPiece[] blackPieces = new ChessPiece[16];
+    private ChessPiece? selectedPiece = null; 
 
     public Form1()
     {
@@ -38,7 +39,7 @@ public partial class Form1 : Form
                     square.Text = piece.Symbol;
                 }
 
-                square.Font = new Font("Arial", 18, FontStyle.Regular);
+                square.Font = new Font("Segoe UI Symbol", 18, FontStyle.Regular);
             }
         }
 
@@ -135,48 +136,130 @@ public partial class Form1 : Form
         return null;
     }
 
-    private Button GetButton(int col, int row)
+    private Button? GetButtonFromPiece()
     {
-        return boardSquares[col, row];
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (boardSquares[i, j].Tag == selectedPiece)
+                {
+                    return boardSquares[i, j];
+                }
+            }
+        }
+        return null;
+    }
+
+    private int GetButtonAxis(Button? button, string axis)
+    { 
+        for (int i = 0; i < 8; i++)
+        {
+            for (int j = 0; j < 8; j++)
+            {
+                if (boardSquares[i, j] == button)
+                {
+                    if (axis == "x")
+                    {
+                        return j;
+                    }
+                    else
+                    {
+                        return i;
+                    }
+                }
+            }
+        }
+        return -1;
+    }
+
+    private void Pawn_Moves(ChessPiece? piece, int direction)
+    {
+        if (piece != null)
+        {
+            //add all possible moves to an array, then loop through and check if in bounds
+            List<int> newXs = new List<int>();
+            List<int> newYs = new List<int>();
+
+            if (boardSquares[piece.Position.y + (1 * direction), piece.Position.x].Tag == null ) {
+                newXs.Add(piece.Position.x);
+                newYs.Add(piece.Position.y + (1 * direction));
+            }
+
+            if ((piece.Position.y == 6 && piece.IsWhite) || (piece.Position.y == 1 && !piece.IsWhite)) {
+                if (boardSquares[piece.Position.y + (2 * direction), piece.Position.x].Tag == null && boardSquares[piece.Position.y + (1 * direction), piece.Position.x].Tag == null)
+                {
+                    newXs.Add(piece.Position.x);
+                    newYs.Add(piece.Position.y + (2 * direction));
+                }
+            }
+
+            for (int i = 0; i < newXs.Count; i++)
+            {
+                if (newXs[i] >= 0 && newXs[i] <= 7 && newYs[i] >= 0 && newYs[i] <= 7)
+                {
+                    Button button = boardSquares[newYs[i], newXs[i]];
+                    button.BackColor = Color.DarkRed;
+                }
+                else
+                {
+                    Console.WriteLine("OUT OF BOUNDS");
+                }
+            }
+            
+        }
+
+    }
+
+    private void Move_Piece(Button? selButton)
+    {
+        if (selButton != null && selectedPiece != null)
+        {
+            Button? oldButton = GetButtonFromPiece();
+            if (oldButton != null)
+            {
+                oldButton.Tag = null;
+                oldButton.Text = "";
+                selButton.Tag = selectedPiece;
+                selButton.Text = selectedPiece.Symbol;
+                selectedPiece.Position = (GetButtonAxis(selButton, "x"), GetButtonAxis(selButton, "y"));
+            }
+        }
     }
 
     private void Square_Click(object? sender, EventArgs e)
     {
-        Clear_Backs();
-        if (sender is Button clicked)
+        if (sender is not Button clicked) return;
+
+        ChessPiece? piece = clicked.Tag as ChessPiece;
+        Button? selButton = clicked;
+
+        if (selButton != null && selButton.BackColor == Color.DarkRed)
         {
-            ChessPiece? piece = clicked.Tag as ChessPiece;
-
-            if (piece != null)
+            // Move the piece
+            if (selectedPiece != null)
             {
-                int direction = piece.IsWhite ? -1 : 1;
-                string? type = piece.Type as string;
-                (int x, int y)[] moves = new (int x, int y)[0];
-                List<(int x, int y)> list = new List<(int x, int y)>(moves); //USE THIS TO STORE ALL POSSIBLE MOVES, THEN LOOP THROUGH TO DISPLAY THEM
-
-                /* this goes down below in pawn field...
-                FIND AND STORE ALL MOVES
-
-                LOOP THROUGH AND CHECK BOUNDS ON EACH MOVE
-
-                CHANGE COLOR FOR MOVE IF VALID
-                */
-
-                if (type == "Pawn")
-                {
-                    int newX = piece.Position.x;
-                    int newY = (piece.Position.y == 6) ? piece.Position.y + (2 * direction) : piece.Position.y + (1 * direction);
-                    if (newX >= 0 && newX <= 7 && newY >= 0 && newY <= 7)
-                    {
-                        Button button = GetButton(newY, newX);
-                        button.BackColor = Color.DarkRed;
-                    }
-                }
+                Move_Piece(selButton);
+                Clear_Backs();
+                return;
             }
-            else
-            {
-                MessageBox.Show("Position data missing.");
-            }
+
+        }
+
+        Clear_Backs();
+
+        if (piece == null)
+        {
+            MessageBox.Show("Position data missing.");
+            return;
+        }
+
+        int direction = piece.IsWhite ? -1 : 1;
+        selectedPiece = piece;
+
+        if (piece.Type == "Pawn")
+        {
+            Pawn_Moves(piece, direction);
         }
     }
     
