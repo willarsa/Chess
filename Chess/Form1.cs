@@ -225,6 +225,87 @@ public partial class Form1 : Form
         }
     }
 
+    private void King_Moves(ChessPiece? piece)
+    {
+        List<int> newXs = new List<int>();
+        List<int> newYs = new List<int>();
+
+        Knight_Check(newXs,newYs,piece.Position.x - 1,piece.Position.y,piece);
+        Knight_Check(newXs,newYs,piece.Position.x - 1,piece.Position.y - 1,piece);
+        Knight_Check(newXs,newYs,piece.Position.x,piece.Position.y - 1,piece);
+        Knight_Check(newXs,newYs,piece.Position.x + 1,piece.Position.y + -1,piece);
+        Knight_Check(newXs,newYs,piece.Position.x + 1,piece.Position.y,piece);
+        Knight_Check(newXs,newYs,piece.Position.x + 1,piece.Position.y + 1,piece);
+        Knight_Check(newXs,newYs,piece.Position.x,piece.Position.y + 1,piece);
+        Knight_Check(newXs,newYs,piece.Position.x - 1,piece.Position.y + 1,piece);
+
+
+        for (int i = 0; i < newXs.Count; i++)
+        {
+            if (newXs[i] >= 0 && newXs[i] <= 7 && newYs[i] >= 0 && newYs[i] <= 7)
+            {
+                Button button = boardSquares[newYs[i], newXs[i]];
+                button.BackColor = Color.DarkRed;
+            }
+            else
+            {
+                Console.WriteLine("OUT OF BOUNDS");
+            }
+        }
+    }
+
+    private void Queen_Moves(ChessPiece? piece)
+    {
+        List<int> newXs = new List<int>();
+        List<int> newYs = new List<int>();
+
+        Line_Check(newXs, newYs, 1, 0, piece);
+        Line_Check(newXs, newYs, 0, 1, piece);
+        Line_Check(newXs, newYs, -1, 0, piece);
+        Line_Check(newXs, newYs, 0, -1, piece);
+        Line_Check(newXs, newYs, 1, -1, piece);
+        Line_Check(newXs, newYs, 1, 1, piece);
+        Line_Check(newXs, newYs, -1, 1, piece);
+        Line_Check(newXs, newYs, -1, -1, piece);
+
+        for (int i = 0; i < newXs.Count; i++)
+        {
+            if (newXs[i] >= 0 && newXs[i] <= 7 && newYs[i] >= 0 && newYs[i] <= 7)
+            {
+                Button button = boardSquares[newYs[i], newXs[i]];
+                button.BackColor = Color.DarkRed;
+            }
+            else
+            {
+                Console.WriteLine("OUT OF BOUNDS");
+            }
+        }
+    }
+
+    private void Rook_Moves(ChessPiece? piece)
+    {
+        List<int> newXs = new List<int>();
+        List<int> newYs = new List<int>();
+
+        Line_Check(newXs, newYs, 1, 0, piece);
+        Line_Check(newXs, newYs, 0, 1, piece);
+        Line_Check(newXs, newYs, -1, 0, piece);
+        Line_Check(newXs, newYs, 0, -1, piece);
+
+        for (int i = 0; i < newXs.Count; i++)
+        {
+            if (newXs[i] >= 0 && newXs[i] <= 7 && newYs[i] >= 0 && newYs[i] <= 7)
+            {
+                Button button = boardSquares[newYs[i], newXs[i]];
+                button.BackColor = Color.DarkRed;
+            }
+            else
+            {
+                Console.WriteLine("OUT OF BOUNDS");
+            }
+        }
+    }
+
     private void Bishop_Moves(ChessPiece? piece)
     {
         List<int> newXs = new List<int>();
@@ -413,6 +494,18 @@ public partial class Form1 : Form
         else if (piece.Type == "Bishop")
         {
             Bishop_Moves(piece);
+        }
+        else if (piece.Type == "Rook")
+        {
+            Rook_Moves(piece);
+        }
+        else if (piece.Type == "Queen")
+        {
+            Queen_Moves(piece);
+        }
+        else if (piece.Type == "King")
+        {
+            King_Moves(piece);
         }
     }
     
