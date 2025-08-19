@@ -117,6 +117,26 @@ public partial class Form1 : Form
 
     }
 
+   private bool isInBounds(int x, int y)
+    {
+        if (y <= 7 && y >= 0 && x <= 7 && x >= 0)
+        {
+            return true;
+        }
+         return false;
+    }
+
+    private bool sameSidePiece(int x, int y, bool isWhite)
+    {
+        if (boardSquares[y,x].Tag != null)
+        {
+            if (((ChessPiece?)boardSquares[y, x].Tag).isWhite == isWhite) {
+                return true;
+            }
+        }
+        return false;
+    } 
+
     private ChessPiece? GetPiece(int col, int row)
     {
         for (int i = 0; i < 16; i++)
@@ -173,6 +193,103 @@ public partial class Form1 : Form
         return -1;
     }
 
+    private void Line_Check(List<int> newXs, List<int> newYs, int x, int y, ChessPiece? piece)
+    {
+        bool shouldContinue = true;
+        while (isInBounds(piece.Position.x + x, piece.Position.y + y))
+        {
+            if (shouldContinue)
+            {
+                if (boardSquares[piece.Position.y + y, piece.Position.x + x].Tag == null)
+                {
+                    newXs.Add(piece.Position.x + x);
+                    newYs.Add(piece.Position.y + y);
+                    if (x != 0) x += 1 * Math.Sign(x);
+                    if (y != 0) y += 1 * Math.Sign(y);
+                }
+                else if (!sameSidePiece(piece.Position.x + x, piece.Position.y + y, ((ChessPiece?)boardSquares[piece.Position.y, piece.Position.x].Tag).isWhite))
+                {
+                    newXs.Add(piece.Position.x + x);
+                    newYs.Add(piece.Position.y + y);
+                    shouldContinue = false;
+                }
+                else
+                {
+                    shouldContinue = false;
+                }
+            }
+            else
+            {
+                break;
+            }
+        }
+    }
+
+    private void Bishop_Moves(ChessPiece? piece)
+    {
+        List<int> newXs = new List<int>();
+        List<int> newYs = new List<int>();
+
+        Line_Check(newXs, newYs, 1, -1, piece);
+        Line_Check(newXs, newYs, 1, 1, piece);
+        Line_Check(newXs, newYs, -1, 1, piece);
+        Line_Check(newXs, newYs, -1, -1, piece);
+
+        for (int i = 0; i < newXs.Count; i++)
+        {
+            if (newXs[i] >= 0 && newXs[i] <= 7 && newYs[i] >= 0 && newYs[i] <= 7)
+            {
+                Button button = boardSquares[newYs[i], newXs[i]];
+                button.BackColor = Color.DarkRed;
+            }
+            else
+            {
+                Console.WriteLine("OUT OF BOUNDS");
+            }
+        }
+    }
+
+    private void Knight_Check(List<int> newXs, List<int> newYs, int x, int y, ChessPiece? piece)
+    {
+        if (isInBounds(x, y))
+        {
+            if (!sameSidePiece(x, y, piece.isWhite))
+            {
+                newXs.Add(x);
+                newYs.Add(y);
+            }
+        }
+    }
+    
+    private void Knight_Moves(ChessPiece? piece)
+    {
+        List<int> newXs = new List<int>();
+        List<int> newYs = new List<int>();
+
+        Knight_Check(newXs,newYs,piece.Position.x - 1,piece.Position.y - 2,piece);
+        Knight_Check(newXs,newYs,piece.Position.x + 1,piece.Position.y - 2,piece);
+        Knight_Check(newXs,newYs,piece.Position.x + 2,piece.Position.y - 1,piece);
+        Knight_Check(newXs,newYs,piece.Position.x + 2,piece.Position.y + 1,piece);
+        Knight_Check(newXs,newYs,piece.Position.x + 1,piece.Position.y + 2,piece);
+        Knight_Check(newXs,newYs,piece.Position.x - 1,piece.Position.y + 2,piece);
+        Knight_Check(newXs,newYs,piece.Position.x - 2,piece.Position.y - 1,piece);
+        Knight_Check(newXs,newYs,piece.Position.x - 2,piece.Position.y + 1,piece);
+
+
+        for (int i = 0; i < newXs.Count; i++)
+        {
+            if (newXs[i] >= 0 && newXs[i] <= 7 && newYs[i] >= 0 && newYs[i] <= 7)
+            {
+                Button button = boardSquares[newYs[i], newXs[i]];
+                button.BackColor = Color.DarkRed;
+            }
+            else
+            {
+                Console.WriteLine("OUT OF BOUNDS");
+            }
+        }
+    }
+
     private void Pawn_Moves(ChessPiece? piece, int direction)
     {
         if (piece != null)
@@ -181,16 +298,44 @@ public partial class Form1 : Form
             List<int> newXs = new List<int>();
             List<int> newYs = new List<int>();
 
-            if (boardSquares[piece.Position.y + (1 * direction), piece.Position.x].Tag == null ) {
-                newXs.Add(piece.Position.x);
-                newYs.Add(piece.Position.y + (1 * direction));
+            //General Move Forward Logic
+            if (piece.Position.y + (1 * direction) <= 7 && piece.Position.y + (1 * direction) >= 0)
+            {
+                if (boardSquares[piece.Position.y + (1 * direction), piece.Position.x].Tag == null)
+                {
+                    newXs.Add(piece.Position.x);
+                    newYs.Add(piece.Position.y + (1 * direction));
+                }
             }
 
-            if ((piece.Position.y == 6 && piece.IsWhite) || (piece.Position.y == 1 && !piece.IsWhite)) {
+            //Move Two Square if at the beginning
+            if ((piece.Position.y == 6 && piece.isWhite) || (piece.Position.y == 1 && !piece.isWhite))
+            {
                 if (boardSquares[piece.Position.y + (2 * direction), piece.Position.x].Tag == null && boardSquares[piece.Position.y + (1 * direction), piece.Position.x].Tag == null)
                 {
                     newXs.Add(piece.Position.x);
                     newYs.Add(piece.Position.y + (2 * direction));
+                }
+            }
+            //Target pieces to the top left and top right
+            if (piece.Position.y + (1 * direction) <= 7 && piece.Position.y + (1 * direction) >= 0)
+            {
+                if (piece.Position.x + 1 <= 7 && piece.Position.x + 1 >= 0)
+                {
+                    if (boardSquares[piece.Position.y + (1 * direction), piece.Position.x + 1].Tag != null)
+                    {
+                        newXs.Add(piece.Position.x + 1);
+                        newYs.Add(piece.Position.y + (1 * direction));
+                    }
+                }
+
+                if (piece.Position.x - 1 <= 7 && piece.Position.x - 1 >= 0)
+                {
+                    if (boardSquares[piece.Position.y + (1 * direction), piece.Position.x - 1].Tag != null)
+                    {
+                        newXs.Add(piece.Position.x - 1);
+                        newYs.Add(piece.Position.y + (1 * direction));
+                    }
                 }
             }
 
@@ -206,7 +351,7 @@ public partial class Form1 : Form
                     Console.WriteLine("OUT OF BOUNDS");
                 }
             }
-            
+
         }
 
     }
@@ -254,12 +399,20 @@ public partial class Form1 : Form
             return;
         }
 
-        int direction = piece.IsWhite ? -1 : 1;
+        int direction = piece.isWhite ? -1 : 1;
         selectedPiece = piece;
 
         if (piece.Type == "Pawn")
         {
             Pawn_Moves(piece, direction);
+        }
+        else if (piece.Type == "Knight")
+        {
+            Knight_Moves(piece);
+        }
+        else if (piece.Type == "Bishop")
+        {
+            Bishop_Moves(piece);
         }
     }
     

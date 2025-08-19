@@ -1,8 +1,8 @@
 public class ChessPiece
 {
     public string Type { get; set; }
-    public bool IsWhite { get; set; }
-    public string Symbol => IsWhite ? WhiteSymbol : BlackSymbol;
+    public bool isWhite { get; set; }
+    public string Symbol => isWhite ? WhiteSymbol : BlackSymbol;
     public (int x, int y) Position { get; set;}
 
     private string WhiteSymbol => Type switch
@@ -27,10 +27,10 @@ public class ChessPiece
         _ => "?"
     };
 
-    public ChessPiece(string type, bool isWhite, int x, int y)
+    public ChessPiece(string type, bool IsWhite, int x, int y)
     {
         Type = type;
-        IsWhite = isWhite;
+        isWhite = IsWhite;
         Position = (x, y);
     }
 }
